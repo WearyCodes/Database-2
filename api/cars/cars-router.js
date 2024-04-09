@@ -1,7 +1,7 @@
 // DO YOUR MAGIC
 const express = require('express')
     const Car = require('./cars-model')
-
+    const {checkCarId, checkCarPayload, checkVinNumberValid, checkVinNumberUnique} = require('./cars-middleware')
 const router = express.Router()
 
 router.get('/', async (req, res, next) => {
@@ -12,8 +12,8 @@ router.get('/', async (req, res, next) => {
         next(err)
     }
 })
-router.get('/:id', async (req, res, next) => {
-    res.json(`Getting car with id ${req.params.id}`)
+router.get('/:id', checkCarId, (req, res, next) => {
+res.json(req.car)
 })
 router.post('/', async (req, res, next) => {
     res.json('posting new car')
